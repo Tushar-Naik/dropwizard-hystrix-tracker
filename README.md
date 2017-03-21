@@ -1,11 +1,10 @@
 # Dropwizard Hystrix Tracker [![Build Status](https://travis-ci.org/Tushar-Naik/dropwizard-hystrix-tracker.svg?branch=master)](https://travis-ci.org/Tushar-Naik/dropwizard-hystrix-tracker)
-####A Bundle that can be used to track API-Paths / Resources 
+#### A Bundle that can be used to track API-Paths / Resources 
 
-A precompiled bundle for all your favourite Resources/API Paths.<br>
+A precompiled bundle for tracking/monitoring your favourite API-Paths/Resources.<br>
 There are 2 features here:
 1. Client Restriction for certain API Paths within your Resource - using annotation ```@ClientRestriction```
 2. Hystrix tracking of APIs - using annotation  ```@TrackPath```<br>
-Prereq: Java 8.
  
 ## Usage
  
@@ -48,24 +47,24 @@ Hystrix metrics will be emitted based on the name of the API.
 ```
 #### Tracking your Resource
 ```java
-    
 @Path("/service/v1")
 @Slf4j
 public class MyResource{
-
+    
     @Path("/api/{path}/search")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @TrackPath("/service/*")
-    public void getResponse() {
+    public Response getResponse() {
         ...    
     }
     ...
+}
 ```
 
 ## 2. Using Client Restriction Bundle
-Depending on the ```ClientFilterConfig```, if a Resource Path is marked with the annotation
- ```@ClientRestriction```, API will return a **STATUS:403 FORBIDDEN** if a header to the incoming Request is not passed, or does not match the ones present in ```ClientFilterConfig```
+Depending on the ```ClientFilterConfig``` provided, <br>if a Resource Path is marked with the annotation
+ ```@ClientRestriction```, <br>API will return a **STATUS:403 FORBIDDEN** if header in the incoming Request is not present,<br> or does not match the ones present in ```ClientFilterConfig.validClients```
 #### Bootstrap
 ```java
     @Override
@@ -79,17 +78,17 @@ Depending on the ```ClientFilterConfig```, if a Resource Path is marked with the
 ```
 #### Adding client filter for a resource 
 ```java
-    
 @Path("/service/v1")
 @Slf4j
 public class MyResource{
-
+    
     @Path("/api/{path}/search")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @ClientRestriction
-    public void getResponse() {
+    public Response getResponse() {
         ...    
     }
     ...
+}
 ```
