@@ -14,11 +14,19 @@
  * limitations under the License.
  */
 
-package io.dropwizard.hystrix.path.tracker.config;
+package io.dropwizard.client.filter.config;
+
+import lombok.Data;
+
+import java.util.Set;
 
 /**
  * @author tushar.naik
- * @version 1.0  21/03/17 - 5:30 PM
+ * @version 1.0
+ * @since 10/10/16 - 4:10 PM
  */
-public class TrackerConfig {
+@Data
+public class ClientFilterConfig {
+    private String header;
+    private Set<String> validClients;
 }
