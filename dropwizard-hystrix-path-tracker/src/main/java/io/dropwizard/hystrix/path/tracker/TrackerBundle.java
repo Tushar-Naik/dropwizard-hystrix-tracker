@@ -18,20 +18,18 @@ package io.dropwizard.hystrix.path.tracker;
 
 import io.dropwizard.Configuration;
 import io.dropwizard.ConfiguredBundle;
-import io.dropwizard.hystrix.path.tracker.config.TrackerConfig;
+import io.dropwizard.hystrix.path.tracker.trackers.RuntimeFeature;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 
 /**
- * Add this bundle to enable tracking on files containing //TODO
+ * Add this bundle to enable tracking on resource files containing {@link io.dropwizard.hystrix.path.tracker.trackers.TrackPath}
+ *
  * @param <T> Type of configuration
  * @author tushar.naik
  * @version 1.0  21/03/17 - 5:29 PM
  */
-public abstract class TrackerBundle<T extends Configuration> implements ConfiguredBundle<T> {
-
-
-    protected abstract TrackerConfig getTrackerConfiguration(T configuration);
+public class TrackerBundle<T extends Configuration> implements ConfiguredBundle<T> {
 
     @Override
     public void initialize(final Bootstrap<?> bootstrap) {
@@ -39,5 +37,6 @@ public abstract class TrackerBundle<T extends Configuration> implements Configur
 
     @Override
     public void run(final T t, final Environment environment) throws Exception {
+        environment.jersey().register(new RuntimeFeature(environment));
     }
 }
