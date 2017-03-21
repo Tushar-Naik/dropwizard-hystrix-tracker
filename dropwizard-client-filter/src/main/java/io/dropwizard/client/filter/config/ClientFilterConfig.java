@@ -16,6 +16,7 @@
 
 package io.dropwizard.client.filter.config;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.util.Set;
@@ -26,6 +27,7 @@ import java.util.Set;
  * @since 10/10/16 - 4:10 PM
  */
 @Data
+@AllArgsConstructor
 public class ClientFilterConfig {
     private String header;
     private Set<String> validClients;
