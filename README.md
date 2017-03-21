@@ -71,12 +71,12 @@ Depending on the ```ClientFilterConfig``` provided, <br>if a Resource Path is ma
     public void initialize(final Bootstrap...) {
         bootstrap.addBundle(new ClientFilterBundle() {
                     public ClientFilterConfig getClientFilterConfig() {
-                        return new ClientFilterConfig("X-My-Header", ImmutableSet.of("ValidClient1", "ValidClient2")));
+                        return new ClientFilterConfig("X-My-Client", ImmutableSet.of("ValidClient1", "ValidClient2")));
                     }
                 });
     }
 ```
-#### Adding client filter for a resource 
+#### Adding client header restriction for a resource 
 ```java
 @Path("/service/v1")
 @Slf4j
