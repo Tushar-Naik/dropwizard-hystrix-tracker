@@ -9,10 +9,14 @@ addons:
     packages:
       - oracle-java8-installer
 
-before_install: "git clone -b travis `git config --get remote.origin.url` target/travis"
+before_install:
+  - ulimit -c unlimited -S
+
 script: "mvn deploy --settings maven_deploy_settings.xml -Dmaven.test.skip=true -Dfindbugs.skip=true"
+
 after_success:
   - mvn clean cobertura:cobertura org.eluder.coveralls:coveralls-maven-plugin:report
+
 env:
   global:
     - secure: "Rk67mMzIgMZiOl9t8ucgXdA2SaOlJia/FlKt5yHDrAdUHYnyUDtvRCI49ao6Zt7K5UvYk6XzEHmqHmiSmXN1nrJoNZ0yKPgLVI+Py7oau1FfZfWBqJGOfzM236jLqrVg7TdZIe9LoyXtXpZ2JpY9tkp675aoWKSopEfoajxWb0S6AwcZUicwKVV/JRvyHE/duynuGt7ADgp/hNWAjYJ9ENdG74Lht27CtH+GUDNh7lZJOYLOwTtP7KYz8QPImtbh7BQfE+0mC4NrgQejEyEXVN5VdDtE3WwpI8WGILgvuLjGxUPMLPAyVOHUKegDTqjmU8ieZa1vDOD72/MACAf/aJ5wgZ1eLXvDtehr4uEXpY75nY9ZSJwI4fCdFjpz4lyTndkoN9D2Hqg15/Kund5v7BED/yjrDB+iL/impHlof03jnA40mKAEV5lxsqBvxansJzREwWBbSHGqJgQXp9KLS+uczHSS2nM8HBrI6wHPQqKvYgq73QBPzBahZxtMYHkcLQMDmlhaHyWFrA5FMjz7crGNxlW5uXc6y1iiN2rwdCKryQGFmLqkELBpO65PLdwGBc4O4OxjSB0mgfnrT8DZYCKqa1HDz+gHDvIiDmT/H9tW8m8nmpSvyIyTPiu4d67UT5aXcze/zXDk2Z9eS+72Rn6YJW2KC9Iar8Ym5YS1HsA="
