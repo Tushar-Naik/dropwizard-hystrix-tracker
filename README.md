@@ -17,6 +17,14 @@ There are 2 features here:
 
         mvn install
 
+### Repository
+```
+<repository>
+    <id>clojars</id>
+    <name>Clojars repository</name>
+    <url>https://clojars.org/repo</url>
+</repository>
+```
 ### Maven Dependency
 * Use the following maven dependency for path tracker:
 ```
