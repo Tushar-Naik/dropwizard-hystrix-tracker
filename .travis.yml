@@ -12,7 +12,7 @@ addons:
 before_install:
   - ulimit -c unlimited -S
 
-script: "mvn deploy --settings maven_deploy_setting.xml -Dmaven.test.skip=true -Dfindbugs.skip=true"
+script: "mvn deploy --settings maven-deploy-setting.xml -Dmaven.test.skip=true -Dfindbugs.skip=true"
 
 after_success:
   - mvn clean cobertura:cobertura org.eluder.coveralls:coveralls-maven-plugin:report
