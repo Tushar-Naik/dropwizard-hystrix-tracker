@@ -46,14 +46,36 @@ public class ClientFilterBundleTest {
                 .build();
         okhttp3.Response response = client.newCall(request).execute();
         Assert.assertEquals(response.code(), 200);
+        request = new Request.Builder()
+                .url(String.format("http://localhost:%d/service/api/cat/api1", RULE.getLocalPort()))
+                .header("X-ABC-HEADER", "Client2")
+                .build();
+        response = client.newCall(request).execute();
+        Assert.assertEquals(response.code(), 200);
     }
 
+    /**
+     * testing no headers
+     */
     @Test
     public void testClientFiltering() throws IOException {
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
                 .url(String.format("http://localhost:%d/service/api/cat/api1", RULE.getLocalPort()))
-//                .header("X-ABC-HEADER", "Client1")
+                .build();
+        okhttp3.Response response = client.newCall(request).execute();
+        Assert.assertEquals(response.code(), 403);
+    }
+
+    /**
+     * testing invalid headers
+     */
+    @Test
+    public void testInvalidClientFiltering() throws IOException {
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder()
+                .url(String.format("http://localhost:%d/service/api/cat/api1", RULE.getLocalPort()))
+                .header("X-ABC-HEADER", "Client4")
                 .build();
         okhttp3.Response response = client.newCall(request).execute();
         Assert.assertEquals(response.code(), 403);
