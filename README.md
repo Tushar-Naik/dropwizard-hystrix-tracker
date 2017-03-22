@@ -76,10 +76,11 @@ Depending on the ```ClientFilterConfig``` provided, <br>if a Resource Path is ma
 #### Bootstrap
 ```java
     @Override
-    public void initialize(final Bootstrap...) {
-        bootstrap.addBundle(new ClientFilterBundle() {
-                    public ClientFilterConfig getClientFilterConfig() {
-                        return new ClientFilterConfig("X-My-Client", ImmutableSet.of("ValidClient1", "ValidClient2")));
+    public void initialize(final Bootstrap<XYZConfiguration> bootstrap) {
+        bootstrap.addBundle(new ClientFilterBundle<XYZConfiguration>() {
+                    @Override
+                    public ClientFilterConfig getClientFilterConfig(XYZConfiguration xYZConfiguration) {
+                        return xYZConfiguration.getClientFilterConfig();
                     }
                 });
     }

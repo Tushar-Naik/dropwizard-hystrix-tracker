@@ -1,0 +1,5 @@
+clientFilterConfig:
+  header: X-ABC-HEADER
+  validClients:
+    - Client1
+    - Client2

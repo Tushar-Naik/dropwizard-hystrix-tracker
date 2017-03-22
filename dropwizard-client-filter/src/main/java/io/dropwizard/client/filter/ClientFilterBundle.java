@@ -29,12 +29,11 @@ import io.dropwizard.setup.Environment;
  */
 public abstract class ClientFilterBundle<T extends Configuration> implements ConfiguredBundle<T> {
 
-    public abstract ClientFilterConfig getClientFilterConfig();
+    public abstract ClientFilterConfig getClientFilterConfig(T t);
 
     @Override
-    public void run(T t, Environment environment) throws Exception {
-
-        environment.jersey().register(new ClientCheckFeature(getClientFilterConfig()));
+    public void run(T configuration, Environment environment) throws Exception {
+        environment.jersey().register(new ClientCheckFeature(getClientFilterConfig(configuration)));
     }
 
     @Override
