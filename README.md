@@ -1,4 +1,6 @@
-# Dropwizard Hystrix Tracker [![Build Status](https://travis-ci.org/Tushar-Naik/dropwizard-hystrix-tracker.svg?branch=master)](https://travis-ci.org/Tushar-Naik/dropwizard-hystrix-tracker)
+# Dropwizard Hystrix Tracker 
+[![Build Status](https://travis-ci.org/Tushar-Naik/dropwizard-hystrix-tracker.svg?branch=master)](https://travis-ci.org/Tushar-Naik/dropwizard-hystrix-tracker)
+[![Coverage Status](https://coveralls.io/repos/github/Tushar-Naik/dropwizard-hystrix-tracker/badge.svg?branch=master)](https://coveralls.io/github/Tushar-Naik/dropwizard-hystrix-tracker?branch=master)
 #### A Bundle that can be used to track API-Paths / Resources 
 
 A precompiled bundle for tracking/monitoring your favourite API-Paths/Resources.<br>
