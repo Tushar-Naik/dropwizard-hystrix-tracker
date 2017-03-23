@@ -1,6 +1,8 @@
 # Dropwizard Hystrix Tracker 
 [![Build Status](https://travis-ci.org/Tushar-Naik/dropwizard-hystrix-tracker.svg?branch=master)](https://travis-ci.org/Tushar-Naik/dropwizard-hystrix-tracker)
 [![Coverage Status](https://coveralls.io/repos/github/Tushar-Naik/dropwizard-hystrix-tracker/badge.svg?branch=master)](https://coveralls.io/github/Tushar-Naik/dropwizard-hystrix-tracker?branch=master)
+[![Apache V2 License](http://img.shields.io/badge/license-Apache%20V2-blue.svg)](//github.com/Tushar-Naik/dropwizard-hystrix-tracker/blob/master/LICENSE)
+
 #### A Bundle that can be used to track API-Paths / Resources 
 
 A precompiled bundle for tracking/monitoring your favourite API-Paths/Resources.<br>
@@ -61,7 +63,7 @@ Hystrix metrics will be emitted based on the name of the API.
 @Slf4j
 public class MyResource{
     
-    @Path("/api/{path}/search")
+    @Path("/api1")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @TrackPath("/service/*")
@@ -71,6 +73,7 @@ public class MyResource{
     ...
 }
 ```
+![alt tag](images/hystrix-dashboard-sample.png?raw=true "Sample Hystrix Dashboard")
 
 ## 2. Using Client Restriction Bundle
 Depending on the ```ClientFilterConfig``` provided, <br>if a Resource Path is marked with the annotation
