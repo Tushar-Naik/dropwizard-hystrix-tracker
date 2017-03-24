@@ -2,6 +2,8 @@
 [![Build Status](https://travis-ci.org/Tushar-Naik/dropwizard-hystrix-tracker.svg?branch=master)](https://travis-ci.org/Tushar-Naik/dropwizard-hystrix-tracker)
 [![Coverage Status](https://coveralls.io/repos/github/Tushar-Naik/dropwizard-hystrix-tracker/badge.svg?branch=master)](https://coveralls.io/github/Tushar-Naik/dropwizard-hystrix-tracker?branch=master)
 [![Apache V2 License](http://img.shields.io/badge/license-Apache%20V2-blue.svg)](//github.com/Tushar-Naik/dropwizard-hystrix-tracker/blob/master/LICENSE)
+[![Clojars Project](https://img.shields.io/clojars/v/io.dropwizard.tracker/dropwizard-hystrix-tracker.svg)](https://clojars.org/io.dropwizard.tracker/dropwizard-hystrix-tracker)
+
 
 #### A Bundle that can be used to track API-Paths / Resources 
 

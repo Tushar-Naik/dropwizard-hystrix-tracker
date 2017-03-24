@@ -27,6 +27,8 @@
         <module>dropwizard-hystrix-path-tracker</module>
         <module>dropwizard-client-filter</module>
     </modules>
+    <name>Dropwizard Hystrix Tracker</name>
+    <description>A Bundle that can be used to track API-Paths / Resources</description>
 
 
 
