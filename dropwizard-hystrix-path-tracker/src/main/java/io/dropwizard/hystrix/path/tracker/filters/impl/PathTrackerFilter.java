@@ -39,15 +39,21 @@ public class PathTrackerFilter implements Filter {
     }
 
     @Override
-    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
-        String uriPath = httpServletRequest.getRequestURI().split("\\?")[0];
-        String path = identifyPath(uriPath);
-        new TrackerCommand.VoidTracker(path, () -> filterChain.doFilter(servletRequest, servletResponse)).execute();
+    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse,
+                         FilterChain filterChain) throws IOException, ServletException {
+        new TrackerCommand.VoidTracker(identifyKey(servletRequest),
+                                       () -> filterChain.doFilter(servletRequest, servletResponse))
+                .execute();
     }
 
     @Override
     public void destroy() {
+    }
+
+    public String identifyKey(ServletRequest servletRequest) {
+        HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
+        String uriPath = httpServletRequest.getRequestURI().split("\\?")[0];
+        return identifyPath(uriPath);
     }
 
     private String identifyPath(String requestUri) {

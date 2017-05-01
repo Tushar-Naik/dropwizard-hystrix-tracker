@@ -16,12 +16,15 @@
 
 package io.dropwizard.hystrix.path.tracker.trackers;
 
+import com.google.common.base.Strings;
 import io.dropwizard.hystrix.path.tracker.filters.FilterBuilder;
+import io.dropwizard.hystrix.path.tracker.filters.impl.NamedPathTrackerFilter;
 import io.dropwizard.hystrix.path.tracker.filters.impl.PathTrackerFilter;
 import io.dropwizard.setup.Environment;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+import javax.servlet.Filter;
 import javax.ws.rs.container.DynamicFeature;
 import javax.ws.rs.container.ResourceInfo;
 import javax.ws.rs.core.FeatureContext;
@@ -39,21 +42,30 @@ import javax.ws.rs.ext.Provider;
 public class RuntimeFeature implements DynamicFeature {
 
     /* environment used to register the filters */
-    private Environment environment;
+    final private Environment environment;
 
     @Override
     public void configure(ResourceInfo resourceInfo, FeatureContext context) {
         TrackPath trackPath = resourceInfo.getResourceMethod().getAnnotation(TrackPath.class);
         if (trackPath != null) {
-            String message = "Registering filter: " + PathTrackerFilter.class.getSimpleName()
+            final boolean hasCommandKeyBeenConfigured = Strings.isNullOrEmpty(trackPath.commandKey());
+            final String key = hasCommandKeyBeenConfigured
+                    ? resourceInfo.getResourceMethod().getName()
+                    : trackPath.commandKey();
+            final Class<? extends Filter> filterClass = hasCommandKeyBeenConfigured
+                    ? PathTrackerFilter.class
+                    : NamedPathTrackerFilter.class;
+            final String message = "Registering filter: " + filterClass.getSimpleName()
                     + " at method: " + resourceInfo.getResourceMethod().getName()
-                    + " against resource path: " + trackPath.value();
+                    + " against key: " + key
+                    + " against resource path: " + trackPath.pathRegex();
             log.info(message);
             FilterBuilder.newBuilder()
-                    .addUrlMapping(trackPath.value())
-                    .withClass(PathTrackerFilter.class)
-                    .build()
-                    .consume(environment);
+                         .addUrlMapping(trackPath.pathRegex())
+                         .withClass(filterClass)
+                         .addInitParam("key", key)
+                         .build()
+                         .consume(environment);
         }
     }
 }

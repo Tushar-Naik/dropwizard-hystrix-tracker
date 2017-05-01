@@ -22,7 +22,7 @@
     <groupId>io.dropwizard.tracker</groupId>
     <artifactId>dropwizard-hystrix-tracker</artifactId>
     <packaging>pom</packaging>
-    <version>1.0.6-SNAPSHOT</version>
+    <version>1.1.0-SNAPSHOT</version>
     <modules>
         <module>dropwizard-hystrix-path-tracker</module>
         <module>dropwizard-client-filter</module>
@@ -73,7 +73,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <dropwizard.version>1.0.6</dropwizard.version>
+        <dropwizard.version>1.1.0</dropwizard.version>
         <lombok.version>1.16.12</lombok.version>
         <guava.version>21.0</guava.version>
         <junit.version>4.12</junit.version>
