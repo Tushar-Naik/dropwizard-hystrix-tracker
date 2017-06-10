@@ -16,7 +16,9 @@
 
 package io.dropwizard.hystrix.path.tracker.filters.impl;
 
+import com.google.common.base.Strings;
 import io.dropwizard.hystrix.path.tracker.hystrix.TrackerCommand;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 
 import javax.servlet.*;
@@ -32,10 +34,14 @@ import java.io.IOException;
  * @see TrackerCommand
  * @since 10/10/16 - 5:23 PM
  */
+@Slf4j
 public class PathTrackerFilter implements Filter {
+    private String key;
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
+        key = filterConfig.getInitParameter("commandKey");
+        log.info("Setting up PathTrackerFilter, with key:{}" + filterConfig.getInitParameterNames());
     }
 
     @Override
@@ -51,6 +57,9 @@ public class PathTrackerFilter implements Filter {
     }
 
     public String identifyKey(ServletRequest servletRequest) {
+        if (!Strings.isNullOrEmpty(key)) {
+            return key;
+        }
         HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
         String uriPath = httpServletRequest.getRequestURI().split("\\?")[0];
         return identifyPath(uriPath);
