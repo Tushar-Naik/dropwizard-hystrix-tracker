@@ -37,14 +37,29 @@ public class TrackerCommand<T> extends HystrixCommand<T> {
 
     public TrackerCommand(String key, ESupplier<T> supplier) {
         super(HystrixCommand.Setter
-                .withGroupKey(HystrixCommandGroupKey.Factory.asKey(key))
-                .andCommandKey(HystrixCommandKey.Factory.asKey(key))
-                .andCommandPropertiesDefaults(
-                        HystrixCommandProperties.Setter()
-                                .withCircuitBreakerEnabled(false)
-                                .withExecutionTimeoutEnabled(false)
-                                .withExecutionIsolationStrategy(HystrixCommandProperties.ExecutionIsolationStrategy.SEMAPHORE)
-                                .withExecutionIsolationSemaphoreMaxConcurrentRequests(Integer.MAX_VALUE)));
+                      .withGroupKey(HystrixCommandGroupKey.Factory.asKey(key))
+                      .andCommandKey(HystrixCommandKey.Factory.asKey(key))
+                      .andCommandPropertiesDefaults(
+                              HystrixCommandProperties.Setter()
+                                                      .withCircuitBreakerEnabled(false)
+                                                      .withExecutionTimeoutEnabled(false)
+                                                      .withExecutionIsolationStrategy(HystrixCommandProperties.ExecutionIsolationStrategy.SEMAPHORE)
+                                                      .withExecutionIsolationSemaphoreMaxConcurrentRequests(Integer.MAX_VALUE)
+                                                      .withFallbackIsolationSemaphoreMaxConcurrentRequests(Integer.MAX_VALUE)));
+        this.supplier = supplier;
+    }
+
+    public TrackerCommand(String key, String group, ESupplier<T> supplier) {
+        super(HystrixCommand.Setter
+                      .withGroupKey(HystrixCommandGroupKey.Factory.asKey(group))
+                      .andCommandKey(HystrixCommandKey.Factory.asKey(key))
+                      .andCommandPropertiesDefaults(
+                              HystrixCommandProperties.Setter()
+                                                      .withCircuitBreakerEnabled(false)
+                                                      .withExecutionTimeoutEnabled(false)
+                                                      .withExecutionIsolationStrategy(HystrixCommandProperties.ExecutionIsolationStrategy.SEMAPHORE)
+                                                      .withExecutionIsolationSemaphoreMaxConcurrentRequests(Integer.MAX_VALUE)
+                                                      .withFallbackIsolationSemaphoreMaxConcurrentRequests(Integer.MAX_VALUE)));
         this.supplier = supplier;
     }
 
