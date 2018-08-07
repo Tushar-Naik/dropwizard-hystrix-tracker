@@ -37,7 +37,7 @@ There are 2 features here:
 <dependency>
     <groupId>io.dropwizard.tracker</groupId>
     <artifactId>dropwizard-hystrix-path-tracker</artifactId>
-    <version>1.1.0-SNAPSHOT</version>
+    <version>1.3.5-1</version>
 </dependency>
 ```
 * Use the following maven dependency for client filter:
@@ -45,7 +45,7 @@ There are 2 features here:
 <dependency>
     <groupId>io.dropwizard.tracker</groupId>
     <artifactId>dropwizard-client-filter</artifactId>
-    <version>1.1.0-SNAPSHOT</version>
+    <version>1.3.5-1</version>
 </dependency>
 ```
 
