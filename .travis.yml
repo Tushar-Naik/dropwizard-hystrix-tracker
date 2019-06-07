@@ -3,12 +3,6 @@ language: java
 jdk:
   - oraclejdk9
 
-# Use updated jdk version instead of buggy default
-addons:
-  apt:
-    packages:
-      - oracle-java8-installer
-
 before_install:
   - ulimit -c unlimited -S
 
