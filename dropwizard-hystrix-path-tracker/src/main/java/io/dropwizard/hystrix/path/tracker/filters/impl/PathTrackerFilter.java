@@ -23,7 +23,6 @@ import org.apache.commons.lang.StringUtils;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
 
 /**
  * This is a filter, that will track the path of the incoming request, using a {@link TrackerCommand.VoidTracker}
@@ -38,15 +37,18 @@ import java.io.IOException;
 public class PathTrackerFilter implements Filter {
     private String key;
 
+    public PathTrackerFilter(String key) {
+        this.key = key;
+        log.info("Setting up PathTrackerFilter, with key:{}" , key);
+    }
+
     @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
-        key = filterConfig.getInitParameter("commandKey");
-        log.info("Setting up PathTrackerFilter, with key:{}" + filterConfig.getInitParameterNames());
+    public void init(FilterConfig filterConfig) {
     }
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse,
-                         FilterChain filterChain) throws IOException, ServletException {
+                         FilterChain filterChain) {
         new TrackerCommand.VoidTracker(identifyKey(servletRequest),
                                        () -> filterChain.doFilter(servletRequest, servletResponse))
                 .execute();

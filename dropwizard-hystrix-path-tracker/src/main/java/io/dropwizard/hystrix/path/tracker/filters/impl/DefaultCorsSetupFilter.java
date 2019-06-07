@@ -33,7 +33,7 @@ public class DefaultCorsSetupFilter implements EnvironmentConsumer {
     @Override
     public void accept(Environment environment) {
         new FilterBuilder().name("CORS")
-                .withClass(CrossOriginFilter.class)
+                .withFilter(new CrossOriginFilter())
                 .addUrlMapping("/*")
                 .addInitParam(CrossOriginFilter.ALLOWED_METHODS_PARAM, "GET,PUT,POST,DELETE,OPTIONS")
                 .addInitParam(CrossOriginFilter.ALLOWED_ORIGINS_PARAM, "*")
@@ -41,6 +41,6 @@ public class DefaultCorsSetupFilter implements EnvironmentConsumer {
                 .addInitParam("allowedHeaders", "Content-Type,Authorization,X-Requested-With,Content-Length,Accept,Origin")
                 .addInitParam("allowCredentials", "true")
                 .build()
-                .consume(environment);
+                .accept(environment);
     }
 }

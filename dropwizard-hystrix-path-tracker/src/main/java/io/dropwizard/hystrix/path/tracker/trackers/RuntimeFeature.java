@@ -56,10 +56,9 @@ public class RuntimeFeature implements DynamicFeature {
             FilterBuilder.newBuilder()
                          .addUrlMapping(trackPath.pathRegex())
                          .name(filterClass.getSimpleName() + ":" + UUID.randomUUID().toString())
-                         .withClass(filterClass)
-                         .addInitParam("commandKey", trackPath.commandKey())
+                         .withFilter(new PathTrackerFilter(trackPath.commandKey()))
                          .build()
-                         .consume(environment);
+                         .accept(environment);
         }
     }
 }

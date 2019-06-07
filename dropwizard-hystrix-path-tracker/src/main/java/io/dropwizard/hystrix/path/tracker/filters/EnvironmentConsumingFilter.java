@@ -16,6 +16,7 @@
 
 package io.dropwizard.hystrix.path.tracker.filters;
 
+import io.dropwizard.hystrix.path.tracker.trackers.EnvironmentConsumer;
 import io.dropwizard.setup.Environment;
 import lombok.AllArgsConstructor;
 
@@ -27,27 +28,35 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * Moved this from class of Filter, to Filter because for some reason
+ * (https://github.com/eclipse/jetty.project/blob/jetty-9.4.x/jetty-servlet/src/main/java/org/eclipse/jetty/servlet/FilterHolder.java)
+ * initialize was not being called for {@link io.dropwizard.hystrix.path.tracker.filters.impl.PathTrackerFilter}
+ * _filter variable remains null here and we get NPE while applying the filter,
+ *
+ *
  * @author tushar.naik
  * @version 1.0
  * @since 05/10/16 - 4:13 PM
  */
 
 @AllArgsConstructor
-public class EnvironmentConsumingFilter {
+public class EnvironmentConsumingFilter implements EnvironmentConsumer {
     private String name;
-    private Class<? extends Filter> klass;
+    private Filter filter;
     private Map<String, String> initParams;
     private List<String> urlMappings;
 
-    public void consume(Environment environment) {
+    @Override
+    public void accept(Environment environment) {
+
         /* if name has not been initialized */
         if (name == null) {
-            name = klass.getSimpleName();
+            name = filter.getClass().getSimpleName();
         }
 
         /* register dynamic filter, for class, with provided url mappings and init params */
-        FilterRegistration.Dynamic filter = environment.servlets().addFilter(name, klass);
-        urlMappings.forEach(u -> filter.addMappingForUrlPatterns(EnumSet.allOf(DispatcherType.class), true, u));
-        initParams.forEach(filter::setInitParameter);
+        FilterRegistration.Dynamic dynamic = environment.servlets().addFilter(name, this.filter);
+        urlMappings.forEach(u -> dynamic.addMappingForUrlPatterns(EnumSet.allOf(DispatcherType.class), true, u));
+        initParams.forEach(dynamic::setInitParameter);
     }
 }

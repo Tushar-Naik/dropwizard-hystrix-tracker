@@ -32,7 +32,7 @@ import java.util.Map;
 public class FilterBuilder implements Builder<EnvironmentConsumingFilter> {
 
     private String name;
-    private Class<? extends Filter> klass;
+    private Filter filter;
     private Map<String, String> initParams = Maps.newConcurrentMap();
     private List<String> urlMappings = Lists.newArrayList();
 
@@ -45,8 +45,8 @@ public class FilterBuilder implements Builder<EnvironmentConsumingFilter> {
         return this;
     }
 
-    public FilterBuilder withClass(Class<? extends Filter> klass) {
-        this.klass = klass;
+    public FilterBuilder withFilter(Filter klass) {
+        this.filter = klass;
         return this;
     }
 
@@ -62,6 +62,6 @@ public class FilterBuilder implements Builder<EnvironmentConsumingFilter> {
 
     @Override
     public EnvironmentConsumingFilter build() {
-        return new EnvironmentConsumingFilter(name, klass, initParams, urlMappings);
+        return new EnvironmentConsumingFilter(name, filter, initParams, urlMappings);
     }
 }
