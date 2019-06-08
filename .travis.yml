@@ -8,7 +8,7 @@ before_install:
 script: "mvn deploy --settings maven-deploy-setting.xml -Dmaven.test.skip=true -Dfindbugs.skip=true"
 
 after_success:
-  - mvn clean cobertura:cobertura org.eluder.coveralls:coveralls-maven-plugin:report
+  - mvn clean verify org.eluder.coveralls:coveralls-maven-plugin:report
 
 env:
   global:
